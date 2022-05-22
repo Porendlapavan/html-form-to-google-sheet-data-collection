@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            margin: 0px;
+            font-family: sans-serif;
+            background: #ddd;
+        }
+
+        .overlay-form {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgb(20, 26, 25);
+            z-index: -10;
+            opacity: 0;
+            padding: 80px 100px;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .overlay-form .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            font-size: 40px;
+            color: crimson;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .overlay-form h1 {
+            font-size: 1rem;
+            color: crimson;
+        }
+
+        .overlay-form p {
+            font-size: 0.6rem;
+            color: #eee;
+            margin: 25px 0px 30px;
+        }
+
+        .overlay-form label {
+            display: block;
+            font-size: 0.8rem;
+            color: #eee;
+            margin-bottom: 5px;
+        }
+
+        .overlay-form input {
+            background-color: #ddd;
+            width: 100%;
+            padding: 6px;
+            font-size: 0.7rem;
+            color: rgb(12, 10, 10);
+            border: 2px solid #eee;
+            /* background: transparent; */
+            outline: none;
+            border-radius: 10px;
+        }
+
+        .overlay-form button {
+            margin-top: 10px;
+            width: 100px;
+            height: 35px;
+            font-size: 1rem;
+            outline: none;
+            border-radius: 10px;
+            border: none;
+            color: #222;
+            background: #fff;
+        }
+
+        body.activeForm .overlay-form {
+            z-index: 2;
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="overlay-form">
+        <form name="google-sheet">
+            <div class="close-btn" onclick="toggleForm()">&times;</div>
+            <div class="form-element">
+                <label>First Name:</label>
+                <span class="input-icon"><i class="fa fa-user"></i></span>
+                <input name="First Name" type="text" class="form-control" placeholder="Enter your first name" required>
+            </div>
+            <div class="form-element">
+                <label>Last Name:</label>
+                <span class="input-icon"><i class="fa fa-user"></i></span>
+                <input name="Last Name" type="text" class="form-control" placeholder="Enter your last name" required>
+            </div>
+            <div class="form-element">
+                <label>Email :</label>
+                <span class="input-icon"><i class="fa fa-envelope"></i></span>
+                <input name="Email" type="email" class="form-control" placeholder="Enter your email" required>
+            </div>
+            <div class="form-element">
+                <label>Phone number:</label>
+                <span class="input-icon"><i class="fas fa-phone-alt"></i></span>
+                <input name="Phone number" type="number" class="form-control" placeholder="Enter your Phone number"
+                    required>
+            </div>
+            <div class="form-element">
+                <button>book a chat</button>
+            </div>
+        </form>
+
+    </div>
+    <div>
+        <button class=" btn center " onclick="toggleForm()">book a chat</button>
+    </div>
+    <script>
+        function toggleForm() {
+            document.body.classList.toggle('activeForm');
+        }
+    </script>
+    <script>
+        const scriptURL =
+            'https://script.google.com/macros/s/AKfycbzu1osijDly60C8Pf1WVKXCz8zNQSmHCg-h6Tq3irY1ey9dFA9Kl5lZnCXlSB7IRtg2SA/exec'
+        const form = document.forms['google-sheet']
+
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            fetch(scriptURL, {
+                    method: 'POST',
+                    body: new FormData(form)
+                })
+                .then(response => alert("Thanks for Contacting us..! We Will Contact You Soon..."))
+                .catch(error => console.error('Error!', error.message))
+        })
+    </script>
+
+</body>
+
+</html>
